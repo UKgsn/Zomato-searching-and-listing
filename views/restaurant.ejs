@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/restaurant.css">
+    <title><%= restaurant && restaurant.restaurant ? restaurant.restaurant.name : 'Restaurant Details' %></title>
+</head>
+<body>
+    <div class="container">
+        <% if (restaurant && restaurant.restaurant) { %>
+            <header>
+                <h1><%= restaurant.restaurant.name %></h1>
+            </header>
+
+            <% if (restaurant.restaurant.featured_image) { %>
+                <img src="<%= restaurant.restaurant.featured_image %>" alt="<%= restaurant.restaurant.name %>" class="featured-image">
+            <% } %>
+
+            <section class="details">
+                <h2>Details</h2>
+                <p><strong>Cuisines:</strong> <%= restaurant.restaurant.cuisines %></p>
+                <p><strong>Address:</strong> <%= restaurant.restaurant.location.address %></p>
+                <p><strong>City:</strong> <%= restaurant.restaurant.location.city %></p>
+                <p><strong>Country ID:</strong> <%= restaurant.restaurant.location.country_id %></p>
+                <p><strong>Locality:</strong> <%= restaurant.restaurant.location.locality %></p>
+                <p><strong>Latitude:</strong> <%= restaurant.restaurant.location.latitude %></p>
+                <p><strong>Longitude:</strong> <%= restaurant.restaurant.location.longitude %></p>
+                <p><strong>Zipcode:</strong> <%= restaurant.restaurant.location.zipcode %></p>
+                <p><strong>Average Cost for Two:</strong> <%= restaurant.restaurant.currency %> <%= restaurant.restaurant.average_cost_for_two %></p>
+                <p><strong>Price Range:</strong> <%= restaurant.restaurant.price_range %></p>
+                <p><strong>Rating:</strong> <%= restaurant.restaurant.user_rating.aggregate_rating %> (<%= restaurant.restaurant.user_rating.votes %> votes)</p>
+                <p><strong>Rating Text:</strong> <%= restaurant.restaurant.user_rating.rating_text %></p>
+                <p><strong>Rating Color:</strong> <%= restaurant.restaurant.user_rating.rating_color %></p>
+                <p><strong>Has Online Delivery:</strong> <%= restaurant.restaurant.has_online_delivery ? 'Yes' : 'No' %></p>
+                <p><strong>Is Delivering Now:</strong> <%= restaurant.restaurant.is_delivering_now ? 'Yes' : 'No' %></p>
+                <p><strong>Has Table Booking:</strong> <%= restaurant.restaurant.has_table_booking ? 'Yes' : 'No' %></p>
+                <p><strong>Menu URL:</strong> <a href="<%= restaurant.restaurant.menu_url %>">Menu</a></p>
+                <p><strong>Book URL:</strong> <a href="<%= restaurant.restaurant.book_url %>">Book a Table</a></p>
+                <p><strong>Events URL:</strong> <a href="<%= restaurant.restaurant.events_url %>">Events</a></p>
+                <p><strong>Deeplink:</strong> <%= restaurant.restaurant.deeplink %></p>
+            </section>
+
+            <section class="events">
+                <h2>Events</h2>
+                <% if (restaurant.restaurant.zomato_events && restaurant.restaurant.zomato_events.length > 0) { %>
+                    <% restaurant.restaurant.zomato_events.forEach(event => { %>
+                        <div class="event">
+                            <h3><%= event.event.title %></h3>
+                            <p><strong>Date:</strong> <%= event.event.display_date %></p>
+                            <p><strong>Time:</strong> <%= event.event.display_time %></p>
+                            <p><strong>Description:</strong> <%= event.event.description %></p>
+                            <% if (event.event.photos && event.event.photos.length > 0) { %>
+                                <div class="event-photos">
+                                    <% event.event.photos.forEach(photo => { %>
+                                        <img src="<%= photo.photo.url %>" alt="Event Photo">
+                                    <% }) %>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No events available</p>
+                <% } %>
+            </section>
+
+            <a href="/" class="back-link">Back to list</a>
+        <% } else { %>
+            <p>Restaurant details not available.</p>
+        <% } %>
+    </div>
+</body>
+</html>
